@@ -1,9 +1,11 @@
 const express = require('express')
 const cors = require('cors')
 const axios = require('axios')
-
-const redis = require('redis');
-const client = redis.createClient();
+const asyncRedis = require('async-redis')
+const { Console } = require('console');
+const { userInfo } = require('os');
+const { json } = require('body-parser');
+const client = asyncRedis.createClient();
 const app = express()
 const port = 5000
 
@@ -20,29 +22,47 @@ client.on('error', function (err) {
     console.log('Something went wrong ' + err);
 });
 
+getUserInfo = async (username) => {
+    let userInfo = await client.get('username:' + username);
+    return userInfo;
+}
 
 
-
-app.get('/', (req,res) => {
-    console.log("You made it yotam")
-    client.set('my test key', 'Fuck it', redis.print);
-
-    client.get('my test key', function (error, result) {
-        if (error) {
-            console.log(error);
-            throw error;
-        }
-        console.log('GET result ->' + result);
-    });
-})
-
-app.post('/signup', (req, res) => {
-    // client.set('my test key', 'Fuck it', redis.print);
+app.post('/signup', async (req, res) => {
     let username = req.body.username;
     let password = req.body.password;
-    console.log("Username is:" + username)
-    console.log("Password is:" + password)
-    client.set(username, password)
+    let getUserName = await getUserInfo(username)
+    if(!getUserName) {
+        let cred_dict = {'password': password,
+                                    'instance_type': 'credentials'}
+        await client.set('username:' + username, JSON.stringify(cred_dict))
+        console.log("OKAY! You signed up now");
+        res.send(false);
+        }
+    else {
+        console.log("USERNAME TAKEN");
+        res.send(true);
+    }  
+})
+
+app.post('/signin', async (req,res) => {
+    let given_username = req.body.username;
+    let given_password = req.body.password;
+    let userInfo = await getUserInfo(given_username)
+    console.log(given_username)
+    console.log(given_password)
+    console.log(userInfo)
+    if(!userInfo) {
+        console.log('Username doesnt exist')
+        res.send(false)
+    }
+    else if (JSON.parse(userInfo).password !== given_password) {
+        console.log('Wrong password')
+        res.send(false)
+    }
+    else {
+        res.send(true)
+    }
 })
 
 app.listen(port, () => {

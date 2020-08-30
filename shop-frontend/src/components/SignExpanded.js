@@ -6,7 +6,7 @@ import Input from './Input';
 import SubmitButton from './SubmitButton';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import crypto from 'crypto';
 
 const axios = require('axios')
 
@@ -39,23 +39,55 @@ class SignExpanded extends Component {
 	onTypePassword = (event) => {
 		let inputText = event.target.value;
 		this.setState({password: inputText})
-
 	}
 
-	onClickSignUp = (event) => {
-		axios.post("http://localhost:5000/signup", {
+	 onClickSignUp = async (event) => {
+		let res = await axios.post("http://localhost:5000/signup", {
 				username: this.state.username,
 				password: this.state.password
 		})
-		toast.success('🦄 Wow so easy!', {
-			position: "top-right",
-			autoClose: 5000,
-			hideProgressBar: false,
-			closeOnClick: true,
-			pauseOnHover: true,
-			draggable: true,
-			progress: undefined,
-		});
+		let isUsernameTaken = res.data;
+		if (isUsernameTaken) {
+			toast.error('Username already taken!', {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+		else {
+			toast.success('Signed up successfully!', {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
+	}
+
+	onClickSignIn = async (event) => {
+		let res = await axios.post("http://localhost:5000/signin", {
+			username: this.state.username,
+			password: this.state.password
+		})
+		console.log(res.data);
+		if (!res.data) {
+			toast.error('Wrong Username/Password', {
+				position: "top-right",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+		}
 	}
 
 	render () {
@@ -89,9 +121,8 @@ class SignExpanded extends Component {
 								placeholder="PASSWORD"
 								onChange={this.onTypePassword}/>
 							{this.props.type == 'signIn' ? 
-									<SubmitButton type={this.props.type} ></SubmitButton> :
+									<SubmitButton type={this.props.type} onClick={this.onClickSignIn}></SubmitButton> :
 									<SubmitButton type={this.props.type} onClick={this.onClickSignUp}></SubmitButton>}
-							{/* <a href="url" className='forgotPass'>{this.props.type == 'signIn' ? 'Forgot password?' : ''}</a> */}
 						</form>
 						}
 				</Motion>
@@ -101,10 +132,9 @@ class SignExpanded extends Component {
 			</Motion>
 		);
 	}
-
 }
 
-SignExpanded.PropTypes ={
+SignExpanded.propTypes ={
 	type: PropTypes.string	
 };
 
