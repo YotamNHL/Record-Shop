@@ -4,7 +4,7 @@ html {
   font-family: "Roboto Condensed", sans-serif;
 }
 body {
-  background-image: url('./winter_mountains.jpg');
+  background-image: url('./dark_background.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -15,6 +15,7 @@ body {
 }
 
 .App {
+  background-image: url('./dark_background2.png');
   align-items: center;
   display: flex;
   height: 100vh;

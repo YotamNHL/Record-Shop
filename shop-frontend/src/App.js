@@ -4,15 +4,19 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {Motion, spring} from 'react-motion';
 import NavigationPanel from './components/NavigationPanel';
 import Modal from './components/Modal';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import MainWindow from './components/MainWindow';
+import 'semantic-ui-css/semantic.min.css'
+import Records from './components/Records'
+
 
 class App extends Component {
 
 	constructor(props) {
 		super(props);
+		this.loggedInHandler = this.loggedInHandler.bind(this)
 		this.state = {
-			mounted: false
+			mounted: false,
+			isLoggedIn: false
 		};
 	}
 
@@ -20,28 +24,41 @@ class App extends Component {
 		this.setState({ mounted: true });
 	}
 	
-	handleSubmit = (e) => {
-		this.setState({ mounted: false });
-		e.preventDefault();
-	}
+	// handleSubmit = (e) => {
+	// 	this.setState({ mounted: false });
+	// 	e.preventDefault();
+	// }
 	
+	loggedInHandler() {
+		this.setState({ isLoggedIn: true })
+	}
 
 	render() {
 
 		
 
 		const {mounted} = this.state;
+		const {isLoggedIn} = this.state;
 
 		let child;
 		let test = 12;
 
 		if(mounted) {
-			child = (
-				<div className="App_test">
-					<NavigationPanel></NavigationPanel>
-					<Modal onSubmit={this.handleSubmit}/>
-				</div>
-			);
+			if (!isLoggedIn) {
+				child = (
+					<div className="App_test">
+						<NavigationPanel></NavigationPanel>
+						<Modal onSubmit={this.handleSubmit} loggedInHandler={this.loggedInHandler}/>
+					</div>
+				);
+			}
+			else {
+				child =(
+					<div>
+						<MainWindow/>
+					</div>
+				);
+			}
 		}
 		
 		return(

@@ -52,15 +52,15 @@ class Modal extends Component {
 		} else if (this.state.wasClickedLeft == false && this.state.wasClickedRight == true) {
 			modalContent = (
 				<div className='Modal'>
-					<SignCollapsed type='signIn' onChange={this.onClickLeft}></SignCollapsed>
-					<SignExpanded type='signUp' ></SignExpanded>
+					<SignCollapsed type='signIn' onChange={this.onClickLeft} loggedInHandler={this.props.loggedInHandler}></SignCollapsed>
+					<SignExpanded type='signUp' loggedInHandler={this.props.loggedInHandler}></SignExpanded>
 				</div>
 			);
 		} else if (this.state.wasClickedLeft == true && this.state.wasClickedRight == false) {
 			modalContent = (
 				<div className='Modal'>
-					<SignExpanded type='signIn' ></SignExpanded>
-					<SignCollapsed type='signUp' onChange={this.onClickRight}></SignCollapsed>
+					<SignExpanded type='signIn' loggedInHandler={this.props.loggedInHandler}></SignExpanded>
+					<SignCollapsed type='signUp' onChange={this.onClickRight} loggedInHandler={this.props.loggedInHandler}></SignCollapsed>
 				</div>
 			);
 		}

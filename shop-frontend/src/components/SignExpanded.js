@@ -71,7 +71,12 @@ class SignExpanded extends Component {
 		}
 	}
 
-	onClickSignIn = async (event) => {
+	loggedInHandler = () => {
+		console.log('Arrived first floor!')
+		this.props.loggedInHandler();
+	}
+
+	onClickSignIn = async (func) => {
 		let res = await axios.post("http://localhost:5000/signin", {
 			username: this.state.username,
 			password: this.state.password
@@ -88,9 +93,13 @@ class SignExpanded extends Component {
 				progress: undefined,
 			});
 		}
+		else {
+			this.loggedInHandler();
+		}
 	}
 
 	render () {
+
 		return (
 			<Motion style={{
 				flexVal: spring(this.state.flexState ? 8 : 1)
@@ -124,6 +133,7 @@ class SignExpanded extends Component {
 									<SubmitButton type={this.props.type} onClick={this.onClickSignIn}></SubmitButton> :
 									<SubmitButton type={this.props.type} onClick={this.onClickSignUp}></SubmitButton>}
 						</form>
+					
 						}
 				</Motion>
 				<ToastContainer />
