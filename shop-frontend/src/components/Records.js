@@ -1,13 +1,22 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
+import axios from 'axios';
 
 
-export default class Resizable extends Component {
-  state = {
-    display: true,
-  };
+
+
+export default class Records extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      display: true,
+    };
+  }
+
   render() {
     const settings = {
       dots: true,
@@ -17,7 +26,37 @@ export default class Resizable extends Component {
       slidesToScroll: 1,
       autoplay: true,
       pauseOnHover: true,
+      lazyLoad: true,
+      draggable: false,
+      arrows: false
     };
+
+    const onClickRecord = async (event) => {
+      let id = event.target.id;
+      console.log(username)
+      let res = await axios.post("http://localhost:5000/addItemToCart", {
+          username: username,
+          itemId: id
+        })
+      toast.success('An item was added to your shopping cart! you got' + String(res.data), {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+
+    const imageR1 = require('../images/records/R1.jpg');
+    const imageR2 = require('../images/records/R2.jpg');
+    const imageR3 = require('../images/records/R3.jpg');
+    const imageR4 = require('../images/records/R4.jpg');
+    const imageR5 = require('../images/records/R5.jpg');
+
+    let username = this.props.username;
+
     return (
       <div>    
         <div
@@ -28,28 +67,28 @@ export default class Resizable extends Component {
           }}
         >
           <Slider {...settings}>
-            <div>
-              <img src="https://images-na.ssl-images-amazon.com/images/I/81aTawcGdmL._AC_SL1500_.jpg" width='165px' height='150px'/>
-              <p><b>Pink Floyd</b><br/>Dark Side of the Moon</p>
+            <div className='productItem'>
+                <img src={imageR1} width='165px' height='150px' onClick={onClickRecord} id='R1'/>
+                <p><b>Pink Floyd</b><br/>Dark Side of the Moon</p>
             </div>
-            <div>
-              <img src="https://blob.cede.ch/catalog/16376000/16376016_1_92.jpg" width='165px' height='150px'/>
+            <div className='productItem'>
+              <img src={imageR2} width='165px' height='150px' onClick={onClickRecord} id='R2'/>
               <p><b>Metallica</b><br/>And Justice For All</p>
             </div>
-            <div>
-              <img src="https://images-na.ssl-images-amazon.com/images/I/71iJQ1MtrYL._SL1445_.jpg" width='165px' height='150px'/>
+            <div className='productItem'>
+              <img src={imageR3} width='165px' height='150px' onClick={onClickRecord} id='R3'/>
               <p><b>Dream Theater</b><br/>Scence from a Memory</p>
             </div>
-            <div>
-              <img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/88/Periphery_IV_Hail_Stan.jpg/220px-Periphery_IV_Hail_Stan.jpg" width='165px' height='150px'/>
+            <div className='productItem'>
+              <img src={imageR4} width='165px' height='150px' onClick={onClickRecord} id='R4'/>
+              <p><b>Hail Stan</b><br/>Periphery</p>
             </div>
-            <div>
-              <img src="https://media.pitchfork.com/photos/5be49b50e3127e7c99e03cab/1:1/w_600/system%20of%20a%20down_toxicity.jpg" width='165px' height='150px'/>
-            </div>
-            <div>
-              <h3>6</h3>
+            <div className='productItem'>
+              <img src={imageR5} width='165px' height='150px' onClick={onClickRecord}/>
+              <p><b>Toxicity</b><br/>System of a Down</p>
             </div>
           </Slider>
+          <ToastContainer />
         </div>
       </div>
     );

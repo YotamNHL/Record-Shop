@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
 import { Menu, Grid, Segment } from 'semantic-ui-react'
 import Records from './Records'
+import RecordPlayers from './RecordPlayers'
 
 export default class MenuExampleInvertedPointing extends Component {
-  state = { activeItem: 'Records' }
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeItem: 'Records'
+    };
+  }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name })
+    console.log(this.state.activeItem);
+  }
 
   render() {
     const { activeItem } = this.state
@@ -25,13 +34,13 @@ export default class MenuExampleInvertedPointing extends Component {
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              name='CDs and DVDs'
-              active={activeItem === 'CDs and DVDs'}
+              name='CD'
+              active={activeItem === 'CDs'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              name='Retro Items'
-              active={activeItem === 'Retro Items'}
+              name='Vintage Items'
+              active={activeItem === 'Vintage Items'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
@@ -47,8 +56,8 @@ export default class MenuExampleInvertedPointing extends Component {
           </Menu>
         </Grid.Column>
         <Grid.Column stretched width={12}>
-          <Segment style={{'background-color': 'rgba(255,255,255,.8'}}>
-            {this.state.activeItem == 'Records' ? <Records/> : <p>hi</p>}
+          <Segment style={{'background-color': 'rgba(255,255,255,.8', padding: '1em 11em', 'align-self': 'stretch'}}>
+            {this.state.activeItem == 'Records' ? <Records username={this.props.username}/> : this.state.activeItem == 'Record Players' ? <RecordPlayers/> : <p>hi</p>}
           </Segment>
         </Grid.Column>
       </Grid>

@@ -3,6 +3,7 @@
 html {
   font-family: "Roboto Condensed", sans-serif;
 }
+
 body {
   background-image: url('./dark_background.jpg');
   background-position: center;
@@ -13,6 +14,26 @@ body {
   height: 100vh;
   overflow: hidden;
 }
+
+.welcomeTag {
+  margin-left: 55px;
+  color: oldlace;
+}
+
+.productItem {
+  transition: transform .2s; /* Animation */
+}
+
+.productItem:hover {
+  transform: scale(0.9); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+.productItem:focus {
+  outline:0;
+}
+
+
+
 
 .App {
   background-image: url('./dark_background2.png');

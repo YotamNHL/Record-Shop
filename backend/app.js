@@ -34,7 +34,7 @@ app.post('/signup', async (req, res) => {
     let getUserName = await getUserInfo(username)
     if(!getUserName) {
         let cred_dict = {'password': password,
-                                    'instance_type': 'credentials'}
+                         'shopping_cart': {}}
         await client.set('username:' + username, JSON.stringify(cred_dict))
         console.log("OKAY! You signed up now");
         res.send(false);
@@ -49,9 +49,7 @@ app.post('/signin', async (req,res) => {
     let given_username = req.body.username;
     let given_password = req.body.password;
     let userInfo = await getUserInfo(given_username)
-    console.log(given_username)
-    console.log(given_password)
-    console.log(userInfo)
+    
     if(!userInfo) {
         console.log('Username doesnt exist')
         res.send(false)
@@ -63,6 +61,23 @@ app.post('/signin', async (req,res) => {
     else {
         res.send(true)
     }
+})
+
+app.post('/addItemToCart', async (req, res) => {
+    let username = req.body.username;
+    let itemId = req.body.itemId;
+    let userInfo = await getUserInfo(username);
+    console.log(userInfo)
+    console.log(String(itemId) in userInfo['shopping_cart'])
+    let newAmountOfItem = 1;
+
+    if(String(itemId) in userInfo['shopping_cart']) {
+        newAmountOfItem += userInfo['shopping_cart'][String(itemId)];
+    }
+
+    userInfo['shopping_cart'][String(itemId)] = newAmountOfItem;
+    await client.set('username:' + username, JSON.stringify(userInfo))
+    res.send(newAmountOfItem)
 })
 
 app.listen(port, () => {

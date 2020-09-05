@@ -10,13 +10,13 @@ import Records from './components/Records'
 
 
 class App extends Component {
-
 	constructor(props) {
 		super(props);
 		this.loggedInHandler = this.loggedInHandler.bind(this)
 		this.state = {
 			mounted: false,
-			isLoggedIn: false
+			isLoggedIn: false,
+			username: 'izikSpizik'
 		};
 	}
 
@@ -55,7 +55,10 @@ class App extends Component {
 			else {
 				child =(
 					<div>
-						<MainWindow/>
+						<div className="welcomeTag">
+							<p><b>Welcome {this.state.username}!</b></p>
+						</div>
+						<MainWindow username={this.state.username}/>
 					</div>
 				);
 			}
