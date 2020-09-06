@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import crypto from 'crypto';
 
 const axios = require('axios')
+axios.defaults.withCredentials = true;
 
 class SignExpanded extends Component {
 
@@ -72,7 +73,6 @@ class SignExpanded extends Component {
 	}
 
 	loggedInHandler = () => {
-		console.log('Arrived first floor!')
 		this.props.loggedInHandler();
 	}
 
@@ -130,7 +130,10 @@ class SignExpanded extends Component {
 								placeholder="PASSWORD"
 								onChange={this.onTypePassword}/>
 							{this.props.type == 'signIn' ? 
-									<SubmitButton type={this.props.type} onClick={this.onClickSignIn}></SubmitButton> :
+									<div>
+										<p style={{'font-size': "12px", marginLeft: '35%'}}> Remember Me <input type="checkbox" id="RememberMe" style={{position: "absolute", 'margin-left': "10px"}}/> </p>
+										<SubmitButton type={this.props.type} onClick={this.onClickSignIn}></SubmitButton> 
+									</div> :
 									<SubmitButton type={this.props.type} onClick={this.onClickSignUp}></SubmitButton>}
 						</form>
 					

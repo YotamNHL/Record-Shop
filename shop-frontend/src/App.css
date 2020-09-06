@@ -46,6 +46,13 @@ body {
   top: 0;
   left: 0;
 }
+
+.logo {
+  position: absolute;
+  margin-left: 63px;
+  margin-top: -300px;
+}
+
 .App_test {
   display: flex;
   flex-direction: row-reverse;
@@ -215,7 +222,7 @@ body {
   width: 60%;
 }
 .logForm h2 {
-  margin-top: 50px;
+  padding-top: 50px;
   margin-bottom: 100px;
 }
 .Input {

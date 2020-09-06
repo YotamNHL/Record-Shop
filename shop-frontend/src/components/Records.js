@@ -28,17 +28,17 @@ export default class Records extends Component {
       pauseOnHover: true,
       lazyLoad: true,
       draggable: false,
-      arrows: false
+      arrows: false,
     };
 
-    const onClickRecord = async (event) => {
+    const onClickItem = async (event) => {
       let id = event.target.id;
       console.log(username)
       let res = await axios.post("http://localhost:5000/addItemToCart", {
           username: username,
           itemId: id
         })
-      toast.success('An item was added to your shopping cart! you got' + String(res.data), {
+      toast.success('An item was added to your shopping cart!', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -49,11 +49,11 @@ export default class Records extends Component {
       });
     }
 
-    const imageR1 = require('../images/records/R1.jpg');
-    const imageR2 = require('../images/records/R2.jpg');
-    const imageR3 = require('../images/records/R3.jpg');
-    const imageR4 = require('../images/records/R4.jpg');
-    const imageR5 = require('../images/records/R5.jpg');
+    const imageR1 = require('../images/R1.jpg');
+    const imageR2 = require('../images/R2.jpg');
+    const imageR3 = require('../images/R3.jpg');
+    const imageR4 = require('../images/R4.jpg');
+    const imageR5 = require('../images/R5.jpg');
 
     let username = this.props.username;
 
@@ -68,23 +68,23 @@ export default class Records extends Component {
         >
           <Slider {...settings}>
             <div className='productItem'>
-                <img src={imageR1} width='165px' height='150px' onClick={onClickRecord} id='R1'/>
+                <img src={imageR1} width='165px' height='150px' onClick={onClickItem} id='R1'/>
                 <p><b>Pink Floyd</b><br/>Dark Side of the Moon</p>
             </div>
             <div className='productItem'>
-              <img src={imageR2} width='165px' height='150px' onClick={onClickRecord} id='R2'/>
+              <img src={imageR2} width='165px' height='150px' onClick={onClickItem} id='R2'/>
               <p><b>Metallica</b><br/>And Justice For All</p>
             </div>
             <div className='productItem'>
-              <img src={imageR3} width='165px' height='150px' onClick={onClickRecord} id='R3'/>
+              <img src={imageR3} width='165px' height='150px' onClick={onClickItem} id='R3'/>
               <p><b>Dream Theater</b><br/>Scence from a Memory</p>
             </div>
             <div className='productItem'>
-              <img src={imageR4} width='165px' height='150px' onClick={onClickRecord} id='R4'/>
+              <img src={imageR4} width='165px' height='150px' onClick={onClickItem} id='R4'/>
               <p><b>Hail Stan</b><br/>Periphery</p>
             </div>
             <div className='productItem'>
-              <img src={imageR5} width='165px' height='150px' onClick={onClickRecord}/>
+              <img src={imageR5} width='165px' height='150px' onClick={onClickItem} id='R5'/>
               <p><b>Toxicity</b><br/>System of a Down</p>
             </div>
           </Slider>
