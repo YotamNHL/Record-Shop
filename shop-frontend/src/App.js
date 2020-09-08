@@ -19,8 +19,8 @@ class App extends Component {
 		this.loggedInHandler = this.loggedInHandler.bind(this)
 		this.state = {
 			mounted: false,
+			username: '',
 			isLoggedIn: false,
-			username: ''
 		};
 	}
 
@@ -52,8 +52,11 @@ class App extends Component {
 		}
 		
 
-		const handleLogOut = (event) => {
+		const handleLogOut = async (event) => {
 			console.log('Logout Button Pressed')
+			let res = await axios.post("http://localhost:5000/logout", {
+					  'username': this.state.username,
+				})
 			document.cookie = "session_cookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 			this.setState({'username': '', 'isLoggedIn': false})
 		}

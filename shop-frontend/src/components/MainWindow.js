@@ -2,12 +2,17 @@ import React, { Component } from 'react'
 import { Menu, Grid, Segment } from 'semantic-ui-react'
 import Records from './Records'
 import RecordPlayers from './RecordPlayers'
+import CD from './Cd'
+import Vintage from './Vintage'
+import ShoppingCart from './ShoppingCart'
+import AdminPanel from './AdminPanel'
 
 export default class MenuExampleInvertedPointing extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeItem: 'Records'
+      activeItem: 'Records',
+      username: this.props.username
     };
   }
 
@@ -18,7 +23,15 @@ export default class MenuExampleInvertedPointing extends Component {
 
   render() {
     const { activeItem } = this.state
-
+    let isUserAdmin = this.state.username == 'admin'
+    let child = null;
+    if (isUserAdmin) {
+        child = <Menu.Item
+                  name='Admin Panel'
+                  active={activeItem === 'Admin Panel'}
+                  onClick={this.handleItemClick}
+                /> 
+    }
     return (
       <Grid>
         <Grid.Column width={4}>
@@ -35,17 +48,17 @@ export default class MenuExampleInvertedPointing extends Component {
             />
             <Menu.Item
               name='CD'
-              active={activeItem === 'CDs'}
+              active={activeItem === 'CD'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              name='Vintage Items'
-              active={activeItem === 'Vintage Items'}
+              name='Vintage'
+              active={activeItem === 'Vintage'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
-              name='My Shopping Cart'
-              active={activeItem === 'My Shopping Cart'}
+              name='Shopping Cart'
+              active={activeItem === 'Shopping Cart'}
               onClick={this.handleItemClick}
             />
             <Menu.Item
@@ -53,11 +66,18 @@ export default class MenuExampleInvertedPointing extends Component {
               active={activeItem === 'About Us'}
               onClick={this.handleItemClick}
             />
+            {child}
           </Menu>
         </Grid.Column>
         <Grid.Column stretched width={12}>
           <Segment style={{'background-color': 'rgba(255,255,255,.8', padding: '1em 11em', 'align-self': 'stretch'}}>
-            {this.state.activeItem == 'Records' ? <Records username={this.props.username}/> : this.state.activeItem == 'Record Players' ? <RecordPlayers/> : <p>hi</p>}
+            {this.state.activeItem == 'Records' ? <Records username={this.props.username}/> :
+            this.state.activeItem == 'Record Players' ? <RecordPlayers username={this.props.username}/> :
+            this.state.activeItem == 'CD' ? <CD username={this.props.username}/> :
+            this.state.activeItem == 'Vintage' ? <Vintage  username={this.props.username}/> :
+            this.state.activeItem == 'Shopping Cart' ? <ShoppingCart username={this.props.username}/> :
+            this.state.activeItem == 'Admin Panel' ? <AdminPanel username={this.props.username}/> : <p>hi</p>
+            }
           </Segment>
         </Grid.Column>
       </Grid>
