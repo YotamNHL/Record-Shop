@@ -82,6 +82,7 @@ app.post('/signup', async (req, res) => {
 app.post('/signin', async (req,res) => {
     let username = req.body.username;
     let password = req.body.password;
+    let rememberMe = req.body.rememberMe;
     let userInfo = await getItemInfo(username)
     const token = crypto.randomBytes(20).toString('hex');
 
@@ -100,8 +101,16 @@ app.post('/signin', async (req,res) => {
         userActivity.push('New login at ' + moment().format());
         userInfo['user_activity'] = userActivity;
         await client.set(username, JSON.stringify(userInfo));
+        console.log(rememberMe)
         await client.set(token, username);
-        res.cookie('session_cookie', token);
+        if(rememberMe) {
+            res.cookie('session_cookie', token);
+        }
+        else {
+            var date = new Date();
+            date.setTime(date.getTime() + (1800000));
+            res.cookie('session_cookie', token, {expires: date});
+        }
         res.send(true)
     }
 })
@@ -113,14 +122,14 @@ app.post('/logout', async (req,res) => {
     let userActivity = userInfo['user_activity'];
     userActivity.push('New logout at ' + moment().format());
     userInfo['user_activity'] = userActivity;
-    await client.set(username, JSON.stringify(userInfo))
-    res.send(true)
+    await client.set(username, JSON.stringify(userInfo));
+    res.send(true);
 })
 
 app.post('/getUsernameFromCookie', async (req, res) => {
     let sessionCookie = req.body.sessionCookie;
     let username = await client.get(sessionCookie);
-    res.send(username)
+    res.send(username);
 })
 
 app.post('/addItemToCart', async (req, res) => {
@@ -211,7 +220,6 @@ app.post('/checkout', async (req,res) => {
     let username = req.body.username;
     let pricePaid = req.body.pricePaid;
     let userInfo = await getItemInfo(username);
-    console.log('Welcome To Checkout mr ' + userInfo)
     userInfo = JSON.parse(userInfo);
     userInfo['shopping_cart'] = {};
     let userActivity = userInfo['user_activity']
@@ -221,6 +229,12 @@ app.post('/checkout', async (req,res) => {
     res.sendStatus(200);
 })
 
+app.get('/testing', async (req, res) => {
+    console.log('Welcome youngling');
+    res.send('enjoy yourself')
+})
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
 })
+

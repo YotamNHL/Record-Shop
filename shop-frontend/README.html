@@ -1,0 +1,37 @@
+<div className='README'>
+    <h1 align='center'>README for the final project (Record Shop)</h1>
+    <ol>
+        <li>Store Name?<br/>
+            <b>Milestones Records</b></li>
+        <li>What are you selling?<br/>
+            <b>Records, CDs, Record Players and Vintage items!</b></li>
+        <li>What additional page(s) did you add? How to operate them?<br/>
+            <b>We've split the main shop into 4 categories (4 different pages) one for each type of product, and added an 'about us' page as well.</b></li>
+        <li> What was hard to do?<br/>
+            <b>Working with redis, and debugging issues with react.</b></li>
+        <li>Who is your partner?  name and id. What did you do? What did your partner do? <br/>
+            <b>My partner was Itai Feiner (id: 204271936), I did the API, and a big chunk of the FRONTEND, Itai did the search capabilites and filtering feature on the ADMIN panel, and also the 'about us' page</b></li>
+        <li>Specify all the different route your app supports<br/>
+            <ul>
+                <li><b>/signin</b><br/>
+                    This route receives a username, a password and a remember me boolean. If the credentials are correct you get logged in (given a token cookie) and adds a log in the users log.</li><br/>
+                <li><b>/signup</b><br/>
+                    This route receives a username and a password. if the username is available it signes you up (registers your credentials in the REDIS database) and adds a log in the users log.</li><br/>
+                <li><b>/logout</b><br/>
+                    This route receives a username and logs out and adds a log in the users log.</li><br/>
+                <li><b>/addItemToCart</b><br/>
+                    This route receives a user name and an item ID. It addes the item (in a smart way) to the users shopping cart and adds a log in the users log.</li><br/>
+                <li><b>/getUserShoppingCart</b><br/>
+                    This route receives a user name. It calculates the whole shopping cart and returns a list consisting all the data (for the shopping cart panel in the front).</li><br/>
+                <li><b>/getAllUsersActivity</b><br/>
+                    This route receives nothing. it return a list of lists the consists all of the users total activity since they signed up.</li><br/>
+                <li><b>/checkout</b><br/>
+                    This route receives a username. it clears the users shopping cart and adds a log to the user log.</li><br/>
+            </ul>
+            <li>How did you make your store secured?<br/>
+                <b>The sign in method (if succesfully logged in) creates a security session token and adds it as a cookie to the users page, without it a user cannot log in and do anything in the main page.</b></li>
+            <li>Did you implement the store using react.js?<br/>
+                <b>Yes.</b></li>
+    
+    </ol>
+</div>

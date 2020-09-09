@@ -24,9 +24,9 @@ export default class MenuExampleInvertedPointing extends Component {
   render() {
     const { activeItem } = this.state
     let isUserAdmin = this.state.username == 'admin'
-    let child = null;
+    let adminPanel = null;
     if (isUserAdmin) {
-        child = <Menu.Item
+        adminPanel = <Menu.Item
                   name='Admin Panel'
                   active={activeItem === 'Admin Panel'}
                   onClick={this.handleItemClick}
@@ -66,7 +66,7 @@ export default class MenuExampleInvertedPointing extends Component {
               active={activeItem === 'About Us'}
               onClick={this.handleItemClick}
             />
-            {child}
+            {adminPanel}
           </Menu>
         </Grid.Column>
         <Grid.Column stretched width={12}>

@@ -28,11 +28,6 @@ class App extends Component {
 		this.setState({ mounted: true });
 	}
 	
-	// handleSubmit = (e) => {
-	// 	this.setState({ mounted: false });
-	// 	e.preventDefault();
-	// }
-	
 	loggedInHandler() {
 		window.location.reload();
 	}

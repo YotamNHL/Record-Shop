@@ -18,6 +18,7 @@ class SignExpanded extends Component {
 		this.state = {
 			flexState: false,
 			animIsFinished: false,
+			rememberMe: false,
 			username: "",
 			password: "",
 		};
@@ -79,7 +80,8 @@ class SignExpanded extends Component {
 	onClickSignIn = async (func) => {
 		let res = await axios.post("http://localhost:5000/signin", {
 			username: this.state.username,
-			password: this.state.password
+			password: this.state.password,
+			rememberMe: this.state.rememberMe
 		})
 		console.log(res.data);
 		if (!res.data) {
@@ -96,6 +98,13 @@ class SignExpanded extends Component {
 		else {
 			this.loggedInHandler();
 		}
+	}
+
+	onClickRememberMe = (event) => {
+		let currentRememberMe = this.state.rememberMe;
+		this.setState({rememberMe: !currentRememberMe}, func => {
+			console.log(this.state.rememberMe)
+		})
 	}
 
 	render () {
@@ -131,7 +140,7 @@ class SignExpanded extends Component {
 								onChange={this.onTypePassword}/>
 							{this.props.type == 'signIn' ? 
 									<div>
-										<p style={{'font-size': "12px", marginLeft: '35%'}}> Remember Me <input type="checkbox" id="RememberMe" style={{position: "absolute", 'margin-left': "10px"}}/> </p>
+										<p style={{'font-size': "12px", marginLeft: '35%'}}> Remember Me <input onChange={this.onClickRememberMe} type="checkbox" id="RememberMe" style={{position: "absolute", 'margin-left': "10px"}}/> </p>
 										<SubmitButton type={this.props.type} onClick={this.onClickSignIn}></SubmitButton> 
 									</div> :
 									<SubmitButton type={this.props.type} onClick={this.onClickSignUp}></SubmitButton>}
