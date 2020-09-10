@@ -6,6 +6,7 @@ import CD from './Cd'
 import Vintage from './Vintage'
 import ShoppingCart from './ShoppingCart'
 import AdminPanel from './AdminPanel'
+import AboutUs from './AboutUs'
 
 export default class MenuExampleInvertedPointing extends Component {
   constructor(props) {
@@ -76,7 +77,7 @@ export default class MenuExampleInvertedPointing extends Component {
             this.state.activeItem == 'CD' ? <CD username={this.props.username}/> :
             this.state.activeItem == 'Vintage' ? <Vintage  username={this.props.username}/> :
             this.state.activeItem == 'Shopping Cart' ? <ShoppingCart username={this.props.username}/> :
-            this.state.activeItem == 'Admin Panel' ? <AdminPanel username={this.props.username}/> : <p>hi</p>
+            this.state.activeItem == 'Admin Panel' ? <AdminPanel username={this.props.username}/> : <AboutUs/>
             }
           </Segment>
         </Grid.Column>

@@ -1,6 +1,4 @@
 const fetch = require('node-fetch');
-const axios = require('axios')
-axios.defaults.withCredentials = true;
 
 // Sign in with admin credentials
 function Test1() {
@@ -20,8 +18,6 @@ function Test1() {
         }).then(fetchResponse => fetchResponse.text()
         ).then(function (value) {
             let succeeded = value;
-            console.log(value)
-
             if (succeeded) {
                 console.log(`Test 1 succeeded`);
             }
@@ -51,8 +47,8 @@ function Test2() {
             })
         }).then(fetchResponse => fetchResponse.text()
         ).then(function (value) {
-            console.log(value)
-            let succeeded = !value;
+            let succeeded = value;
+            succeeded != succeeded;
             if (succeeded) {
                 console.log(`Test 2 succeeded`);
             }
@@ -66,7 +62,7 @@ function Test2() {
 }
 
 
-// Sign in with wrong admin credentials
+// Get Users activity
 function Test3() {
     return fetch(
         `http://localhost:5000/getAllUsersActivity`,
@@ -78,8 +74,13 @@ function Test3() {
             },
         }).then(fetchResponse => fetchResponse.text()
         ).then(function (value) {
-            console.log(value)
-            let succeeded = !value;
+            succeeded = false;
+            returned_arr = JSON.parse(value)
+            returned_arr.forEach(userActivity => {
+                if (userActivity[0] == 'admin') {
+                    succeeded = userActivity[1][0] == 'Signed up at the beginning of time';
+                }
+            });
             if (succeeded) {
                 console.log(`Test 3 succeeded`);
             }
@@ -92,53 +93,6 @@ function Test3() {
         });
 }
 
-
-function Test4() {
-    return fetch(`http://localhost:5000/getAllUsersActivity`
-        ).then(fetchResponse => fetchResponse.text()
-        ).then(function (value) {
-            console.log(value)
-            let succeeded = !value;
-            if (succeeded) {
-                console.log(`Test 3 succeeded`);
-            }
-            else {
-                console.log(`Test 3 failed`)
-            }
-        })
-        .catch(function (err) {
-            console.log('Test 3 FAILURE with error ' + err);
-        });
-}
-
-function Test6() {
-    return fetch(`http://localhost:5000/testing`
-        ).then(fetchResponse => fetchResponse.text()
-        ).then(function (value) {
-            console.log(value)
-            let succeeded = !value;
-            if (succeeded) {
-                console.log(`Test 3 succeeded`);
-            }
-            else {
-                console.log(`Test 3 failed`)
-            }
-        })
-        .catch(function (err) {
-            console.log('Test 3 FAILURE with error ' + err);
-        });
-}
-
-function Test7() {
-    var requestOptions = {
-        method: 'GET',
-        redirect: 'follow'
-      };
-      
-      fetch("http://localhost:5000/testing", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-    }
-
-Test7()
+Test1()
+Test2()
+Test3()

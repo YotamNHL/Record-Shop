@@ -5,7 +5,6 @@ html {
 }
 
 body {
-  background-image: url('./dark_background.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -32,11 +31,8 @@ body {
   outline:0;
 }
 
-
-
-
 .App {
-  background-image: url('./dark_background2.png');
+  background-image: url('./images/dark_background2.png');
   align-items: center;
   display: flex;
   height: 100vh;

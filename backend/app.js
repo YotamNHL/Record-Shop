@@ -210,7 +210,6 @@ app.get('/getAllUsersActivity', async (req,res) => {
             }
         }
         catch(e) {
-            console.log('woops')
         }
     }
     res.send(final_payload)
@@ -227,11 +226,6 @@ app.post('/checkout', async (req,res) => {
     userInfo['user_activity'] = userActivity;
     await client.set(username, JSON.stringify(userInfo));
     res.sendStatus(200);
-})
-
-app.get('/testing', async (req, res) => {
-    console.log('Welcome youngling');
-    res.send('enjoy yourself')
 })
 
 app.listen(port, () => {
